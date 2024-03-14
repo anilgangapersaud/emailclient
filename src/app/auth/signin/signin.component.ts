@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { InputComponent } from '../../shared/input/input.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -29,9 +30,7 @@ export class SigninComponent {
     ])
   });
 
-  constructor(private authService: AuthService) {
-
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   signIn() {
     if (this.signinForm.invalid) {
@@ -40,7 +39,7 @@ export class SigninComponent {
 
     this.authService.signin(this.signinForm.value).subscribe({
       next: () => {
-
+        this.router.navigateByUrl('/inbox');
       },
       error: ({error}) => {
         if (error.username || error.password) {

@@ -6,5 +6,6 @@ import { SignoutComponent } from './auth/signout/signout.component';
 export const routes: Routes = [
     { path: '', component: SigninComponent },
     { path: 'signup', component: SignupComponent },
-    { path: 'signout', component: SignoutComponent }
+    { path: 'signout', component: SignoutComponent },
+    { path: 'inbox', loadChildren: () => import('./inbox/inbox.module').then(m => m.InboxModule)}
 ];
