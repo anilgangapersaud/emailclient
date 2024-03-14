@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
 import { InputComponent } from '../../shared/input/input.component';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +23,7 @@ export class SignupComponent {
       Validators.minLength(3),
       Validators.maxLength(20),
       Validators.pattern(/^[a-z0-9]+$/)
-    ], [this.uniqueUsername.validate()]),
+    ], [this.uniqueUsername.validate]),
     password: new FormControl('', 
     [
       Validators.required,
@@ -41,7 +42,28 @@ export class SignupComponent {
 
   constructor(
     private passwordMatcher: MatchPassword,
-    private uniqueUsername: UniqueUsername) {
+    private uniqueUsername: UniqueUsername,
+    private authService: AuthService) {
+  }
+
+  onSubmit() {
+    if (this.authForm.invalid) {
+      return;
+    }
+
+    this.authService.signup(this.authForm.value).subscribe({
+      next: (response) => {
+        // Navigate to some other route
+      },
+      error: (err) => {
+        if (!err.status) {
+          this.authForm.setErrors({ noConnection: true })
+        } else {
+          this.authForm.setErrors({ unknownError: true })
+        }
+      }
+    });
+    
   }
 
 }

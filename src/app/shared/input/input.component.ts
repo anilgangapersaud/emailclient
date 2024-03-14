@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { isObservable } from 'rxjs';
 
 @Component({
   selector: 'app-input',
@@ -14,11 +13,11 @@ export class InputComponent {
 
   @Input() label = '';
   @Input() control: any;
+  @Input() inputType: string;
 
   showErrors() {
-    if (this.control != undefined && this.control.errors != null && !isObservable(this.control.errors)) {
-      const { dirty, touched, errors } = this.control;
-      return dirty && touched && errors;
-    }
+    const { dirty, touched, errors } = this.control;
+    return dirty && touched && errors;
+
   }
 }
