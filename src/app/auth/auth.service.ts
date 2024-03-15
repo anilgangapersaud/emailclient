@@ -20,7 +20,7 @@ interface AuthenticatedResponse {
 export class AuthService {
 
   rootUrl = "https://api.angular-email.com/auth";
-  signedin$ = new BehaviorSubject<boolean>(false)
+  signedin$ = new BehaviorSubject<any>(null)
 
   constructor(private client: HttpClient) { }
 
