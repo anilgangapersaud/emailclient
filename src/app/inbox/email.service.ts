@@ -27,7 +27,11 @@ export class EmailService {
     return this.client.get<Email>(`${this.rootUrl}/emails/${emailId}`);
   }
 
-  sendEmail(email: any) {
-    return this.client.post(`${this.rootUrl}/emails`, email);
+  sendEmail(email: Email) {
+    return this.client.post(`${this.rootUrl}/emails`, {
+      to: email.to,
+      subject: email.subject,
+      text: email.text
+    });
   }
 }
